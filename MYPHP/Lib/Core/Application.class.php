@@ -3,6 +3,38 @@ final class Application {
     public static function run() {
         self::_init(); //初始化
         self::_set_url(); //设置外部路径
+        spl_autoload_register(array(__CLASS__,'_autoload')); //自动加载类
+        self::_create_demo(); //创建demo
+        self::_app_run(); //运行代码
+    }
+
+    private static function _app_run() {
+        $c = isset($_GET[C('VAR_CONTROLLER')]) ? $_GET[C('VAR_CONTROLLER')] : 'Index';
+        $a = isset($_GET[C('VAR_ACTION')]) ? $_GET[C('VAR_ACTION')] : 'index';
+
+        $c .= 'Controller';
+
+        $obj = new $c();
+        $obj->$a();
+    }
+
+    private static function _autoload($className) {
+        require APP_CONTROLLER_PATH.'/'.$className.'.class.php';
+    }
+
+    private static function _create_demo() {
+        $path = APP_CONTROLLER_PATH.'/IndexController.class.php';
+
+        $str = <<<str
+<?php
+class IndexController extends Controller{
+    public function index(){
+        echo 'OK';
+    }
+}
+?>
+str;
+        is_file($path) || file_put_contents($path,$str);
     }
 
     private static function _init() {

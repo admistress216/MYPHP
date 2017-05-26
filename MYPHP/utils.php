@@ -49,7 +49,8 @@ final class Utils {
     private static function _import_file() {
         $fileArr = array(
             FUNCTION_PATH.'/function.php',
-            CORE_PATH.'/Application.class.php'
+            CORE_PATH.'/Application.class.php',
+            CORE_PATH.'/Controller.class.php'
         );
         foreach($fileArr as $v) {
             require_once $v;
