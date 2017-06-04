@@ -5,8 +5,14 @@
 final class Utils {
     public static function run() {
         self::_set_const(); //设置常量
-        self::_create_dir(); //创建文件夹
-        self::_import_file(); //载入必须文件
+        defined('DEBUG') || define('DEBUG', False);
+        if(DEBUG) {
+            self::_create_dir(); //创建文件夹
+            self::_import_file(); //载入必须文件
+        } else {
+            error_reporting(0);
+            require TEMP_PATH.'/~boot.php';
+        }
         Application::run(); //执行应用类
     }
     private static function _set_const() {
@@ -62,9 +68,13 @@ final class Utils {
             CORE_PATH.'/Application.class.php',
             CORE_PATH.'/Controller.class.php'
         );
+        $str = '';
         foreach($fileArr as $v) {
+            $str .= trim(substr(file_get_contents($v), 5, -2))."\r\n";
             require_once $v;
         }
+        $str = "<?php\r\n".$str;
+        file_put_contents(TEMP_PATH.'/~boot.php',$str) || die('access not allow');
     }
 }
 
