@@ -5,9 +5,11 @@
  * @Author: lizengcai
  */
 function p($arr) {
-    echo '<pre>';
-    print_r($arr);
-    echo '</pre>';
+    if(is_bool($arr) || is_null($arr)) {
+        var_dump($arr);
+    } else {
+        echo '<pre style="padding: 10px;border-radius:5px;background:#f5f5f5;border:1px solid #ccc;fontsize:14px">'.print_r($arr,true).'</pre>';
+    }
 }
 
 /**
