@@ -3,10 +3,12 @@
  *父类
  */
 class Controller {
-    protected function success(){
-        echo 'success';
+    protected function success($msg,$url=NULL,$time=3){
+        $url = $url ? "window.location.href='".$url."'" : 'window.history.back(-1)';
+        include APP_TPL_PATH.'/success.html';
     }
-    protected function error(){
-        echo 'error';
+    protected function error($msg,$url=NULL,$time=3){
+        $url = $url ? "window.location.href='".$url."'" : 'window.history.back(-1)';
+        include APP_TPL_PATH.'/error.html';
     }
 }
