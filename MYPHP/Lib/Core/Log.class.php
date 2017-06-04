@@ -9,3 +9,4 @@ class Log {
         if(is_dir(LOG_PATH)) error_log("[TIME]".date('Y-m-d H:i:s')."{$level}:{$msg}\r\n",$type,$dest);
     }
 }
+?>

@@ -18,3 +18,4 @@ class Controller {
         include APP_TPL_PATH.'/error.html';
     }
 }
+?>

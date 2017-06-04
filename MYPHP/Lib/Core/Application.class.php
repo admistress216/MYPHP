@@ -72,3 +72,4 @@ str;
         define('__PUBLIC__', __TPL__.'/Public');
     }
 }
+?>
