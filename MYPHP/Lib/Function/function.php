@@ -12,6 +12,16 @@ function p($arr) {
     }
 }
 
+function go($url, $time=0, $msg='') {
+    if(!headers_sent()) {
+        $time == 0 ? header('Location:'.$url) : header("refresh:{$time};url={$url}");
+        die($msg);
+    } else {
+        echo "<meta http-equiv='Refresh' content='{$time};URL={$url}'>";
+        if($time) die($msg);
+    }
+}
+
 /**
  * 功能:
  * 1.加载配置项C($sysConfig)=>C($userConfig)
