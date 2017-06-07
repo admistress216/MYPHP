@@ -11,4 +11,8 @@ return array(
     'VAR_ACTION' => 'a',
     //是否开启日志
     'SAVE_LOG' => TRUE,
+    //错误跳转的地址
+    'ERROR_URL' => '',
+    //错误提示信息
+    'ERROR_MSG' => '网站出错...'
 );

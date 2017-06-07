@@ -4,6 +4,39 @@
  *
  * @Author: lizengcai
  */
+function halt($error,$level='ERROR',$type=3,$dest=NULL) {
+    if(is_array($error)) {
+        Log::write($error['message'],$level,$type,$dest);
+    } else {
+        Log::write($error,$level,$type,$dest);
+    }
+    $e = array();
+    //开启debug操作
+    if(DEBUG){
+        if(!is_array($error)) {
+            $trace = debug_backtrace();
+            $e['message'] = $error;
+            $e['file'] = $trace[0]['file'];
+            $e['line'] = $trace[0]['line'];
+            $e['class'] = isset($trace[0]['class']) ? $trace[0]['class'] : '';
+            $e['function'] = isset($trace[0]['function']) ? $trace[0]['function'] : '';
+            ob_start();
+            debug_print_backtrace();
+            $e['trace'] = htmlspecialchars(ob_get_clean());
+        } else {
+            $e = $error;
+        }
+    } else {
+        if($url = C('ERROR_URL')){
+            go($url);
+        }else{
+            $e['message'] = C('ERROR_MSG');
+        }
+    }
+    include DATA_PATH.'/Tpl/halt.html';
+    die;
+}
+
 function p($arr) {
     if(is_bool($arr) || is_null($arr)) {
         var_dump($arr);
