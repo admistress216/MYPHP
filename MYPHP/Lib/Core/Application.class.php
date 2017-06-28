@@ -44,6 +44,19 @@ str;
         //加载系统配置项
         C(include CONFIG_PATH.'/config.php');
 
+        //加载公共配置项
+        $commonPath = COMMON_CONFIG_PATH.'/config.php';
+
+        $commonConfig = <<<str
+<?php
+return array(
+    //配置项 => 配置值
+);
+?>
+str;
+        is_file($commonPath) || file_put_contents($commonPath, $commonConfig);
+        C(include $commonPath);
+
         /****加载用户配置项****/
         $userPath = APP_CONFIG_PATH.'/config.php';
 
