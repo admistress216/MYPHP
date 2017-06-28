@@ -16,12 +16,39 @@ final class Application {
         define('ACTION', $a);
 
         $c .= 'Controller';
+        if(class_exists($c)) {
+            $obj = new $c();
+            $obj->$a();
+        } else {
+            $obj = new EmptyController();
+            $obj->index();
+        }
 
-        $obj = new $c();
-        $obj->$a();
     }
 
     private static function _autoload($className) {
+        switch(true) {
+            //判断是否是控制器
+            case strlen($className)>10 && substr($className,-10) == 'Controller':
+                $path = APP_CONTROLLER_PATH.'/'.$className.'.class.php';
+                if(!is_file($path)){
+                    $emptyPath = APP_CONTROLLER_PATH.'/EmptyController.class.php';
+                    if(is_file($emptyPath)){
+                        include $emptyPath;
+                        return;
+                    } else {
+                        halt($path.'控制器未找到');
+                    }
+                }
+                include $path;
+                break;
+            default:
+                $path = TOOL_PATH.'/'.$className.'.class.php';
+
+                if(!is_file($path)) halt($path.'类未找到');
+                include $path;
+                break;
+        }
         require APP_CONTROLLER_PATH.'/'.$className.'.class.php';
     }
 
