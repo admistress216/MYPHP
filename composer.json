@@ -1,0 +1,14 @@
+{
+    "name": "anker1992/myphp",
+    "description": "a test composer project",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Li Zengcai",
+            "email": "lizengcai_vip@sina.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
